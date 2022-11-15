@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Deck
 {
     private List<Card> cards;
-
+    private List<Card> nd;
     /**
      * Deck constructor: Create an empty deck of cards
      */
@@ -45,14 +45,15 @@ public class Deck
      */
     public void shuffle() {
         // To be written
-        List<Card> nd;
+        
         nd = new ArrayList();
         int s = getDeckSize();
-        
-        for (int i =0; i > s; i++) {
-            int r = (int)((Math.random()*52)+1);
+        int i = 0;
+        while (i<s) {
+            int r = (int)((Math.random()*s))+1;
             nd.add(cards.get(r-1));
-            nd.remove(cards.get(r-1));
+            cards.remove(r-1);
+            s--;
         }
         cards = nd;
     }
@@ -80,6 +81,11 @@ public class Deck
      */
     public Card dealCardFromDeck() {
         // To be written 
+        if (getDeckSize() > 0) {
+            Card top = cards.get(0);
+            cards.remove(0);
+            return top;
+        }
         return null;
     }
     
@@ -89,6 +95,7 @@ public class Deck
      */
     public void addCardToDeck(Card cardToAdd) {
         // To be written
+        cards.add(cardToAdd);
     }
     
 }
