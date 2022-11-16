@@ -7,6 +7,7 @@
  */
 public class War
 {
+    private Deck[] ds;
     /**
      * Constructor for the game
      * Include your initialization here -- card decks, shuffling, etc
@@ -18,6 +19,11 @@ public class War
         Deck deck = new Deck();
         deck.initializeNewDeck();
         deck.shuffle();
+        ds= deck.dealDeck();
+        System.out.println(ds[0]);
+        System.out.println(ds[1]);
+        
+        
         
         // ...then run the event loop
         this.runEventLoop();
