@@ -42,7 +42,7 @@ public class War
             System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
             System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
             if (p1.getRank() == p2.getRank()) {
-                war(p1,p2,d1,d2);
+                war(d1,d2,p1,p2);
             } else if (p1.getRank() > p2.getRank()) {
                 d1.addCardToDeck(p1); // moves the first card to the back
                 d1.addCardToDeck(p2);
@@ -59,7 +59,7 @@ public class War
         }
     }
 
-    public void war(Card p1, Card p2, Deck d1, Deck d2) {
+    public void war(Deck d1, Deck d2, Card p1, Card p2) {
         System.out.println("War");
         if (d1.getDeckSize() >= 4 && d2.getDeckSize() >= 4) {
             CardsForGrab.addCardToDeck(p1);
@@ -77,7 +77,9 @@ public class War
             System.out.println("Player 1 top card = " + p1t.getFace() + " of " + p1t.getSuit());
             System.out.println("Player 2 top card = " + p2t.getFace() + " of " + p2t.getSuit());
             int size;
-            if (p1t.getRank() > p2t.getRank()) {
+            if (p1t.getRank() == p2t.getRank()) {
+                war(d1,d2,p1,p2);
+            }else if (p1t.getRank() > p2t.getRank()) {
                 System.out.println("Player 1 Wins War");
                 size = CardsForGrab.getDeckSize();
                 for (int i =0; i< size; i++) {
@@ -93,11 +95,9 @@ public class War
                 }
                 System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
                 System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
-            } else if (p1t.getRank() == p2t.getRank()) {
-                war(p1t,p2t,d1,d2);
-            }
+            } 
 
-        } else if (d1.getDeckSize() < 4) {
+        } else if (d2.getDeckSize() > 4) {
             //System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
             //System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
             //System.out.println("Not enough cards for War, Player 2 Wins");
@@ -105,15 +105,16 @@ public class War
             for (int i =0; i<test; i++) {
                 d2.addCardToDeck(d1.dealCardFromDeck());
             }
-            
-        } else if (d2.getDeckSize() < 4) {
+            //System.out.println("Player 1 Does Not Have Enough Cards For War");
+        } else {
             //System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
             //System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
             //System.out.println("Not enough cards for War, Player 1 Wins");
-            int test = d1.getDeckSize();
+            int test = d2.getDeckSize();
             for (int i =0; i<test; i++) {
-                d2.addCardToDeck(d1.dealCardFromDeck());
+                d1.addCardToDeck(d2.dealCardFromDeck());
             }
+            //System.out.println("Player 2 Does Not Have Enough Cards For War");
         }
     }
 
