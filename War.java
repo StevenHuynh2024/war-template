@@ -1,4 +1,3 @@
-
 /**
  * War game class
  *
@@ -23,7 +22,7 @@ public class War
         ds = deck.dealDeck();
         Deck d1 = ds[0];
         Deck d2 = ds[1];
-        
+
         // ...then run the event loop
         this.runEventLoop(d1,d2);
     }
@@ -53,60 +52,67 @@ public class War
             }
             round++;
         }
-        if (d1.getDeckSize() > d2.getDeckSize()) {
+        if (d1.getDeckSize() > d2.getDeckSize() || d2.getDeckSize() == 0) {
             System.out.println("Player 1 wins");
-        } else {
+        } else if (d2.getDeckSize() > d1.getDeckSize() || d1.getDeckSize() == 0) {
             System.out.println("Player 2 wins");
         }
     }
 
     public void war(Card p1, Card p2, Deck d1, Deck d2) {
+        System.out.println("War");
         if (d1.getDeckSize() >= 4 && d2.getDeckSize() >= 4) {
-            if (p1.getRank() == p2.getRank()) {
-                System.out.println("War");
-                for (int i =0; i<3; i++) {
-                    CardsForGrab.addCardToDeck(d1.dealCardFromDeck());
-                }
-                for(int i = 0; i<3; i++) {
-                    CardsForGrab.addCardToDeck(d2.dealCardFromDeck());
-                }
-                Card p1t = d1.dealCardFromDeck();
-                Card p2t = d2.dealCardFromDeck();
-                CardsForGrab.addCardToDeck(p1t);
-                CardsForGrab.addCardToDeck(p2t);
-                System.out.println("Player 1 top card = " + p1t.getFace() + " of " + p1t.getSuit());
-                System.out.println("Player 2 top card = " + p2t.getFace() + " of " + p2t.getSuit());
-                System.out.println(CardsForGrab.getDeckSize());
-                int size;
-                if (p1t.getRank() > p2t.getRank()) {
-                    size = CardsForGrab.getDeckSize();
-                    System.out.println("Player 1 Before: " + d1.getDeckSize());
-                    System.out.println("Player 2 Before: " + d2.getDeckSize());
-                    for (int i =0; i< size; i++) {
-                        d1.addCardToDeck(CardsForGrab.dealCardFromDeck());
-                    }
-                    System.out.println("Card for Grab Size = " + CardsForGrab.getDeckSize());
-                    System.out.println("Player 1 After: " + d1.getDeckSize());
-                    System.out.println("Player 2 After: " + d2.getDeckSize());
-                } else if (p1t.getRank() < p2t.getRank()) {
-                    size = CardsForGrab.getDeckSize();
-                    System.out.println("Player 2 Before: " + d2.getDeckSize());
-                    for(int i = 0; i<size; i++) {
-                        d2.addCardToDeck(CardsForGrab.dealCardFromDeck());
-                    }
-                    System.out.println("Card for Grab Size = " + CardsForGrab.getDeckSize());
-                    System.out.println("Player 2 After: " + d2.getDeckSize());
-                } else if (p1t.getRank() == p2t.getRank()) {
-                    war(p1t,p2t,d1,d2);
-                }
+            CardsForGrab.addCardToDeck(p1);
+            CardsForGrab.addCardToDeck(p2);
+            for (int i =0; i<3; i++) {
+                CardsForGrab.addCardToDeck(d1.dealCardFromDeck());
             }
+            for(int i = 0; i<3; i++) {
+                CardsForGrab.addCardToDeck(d2.dealCardFromDeck());
+            }
+            Card p1t = d1.dealCardFromDeck();
+            Card p2t = d2.dealCardFromDeck();
+            CardsForGrab.addCardToDeck(p1t);
+            CardsForGrab.addCardToDeck(p2t);
+            System.out.println("Player 1 top card = " + p1t.getFace() + " of " + p1t.getSuit());
+            System.out.println("Player 2 top card = " + p2t.getFace() + " of " + p2t.getSuit());
+            int size;
+            if (p1t.getRank() > p2t.getRank()) {
+                System.out.println("Player 1 Wins War");
+                size = CardsForGrab.getDeckSize();
+                for (int i =0; i< size; i++) {
+                    d1.addCardToDeck(CardsForGrab.dealCardFromDeck());
+                }
+                System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
+                System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
+            } else if (p1t.getRank() < p2t.getRank()) {
+                System.out.println("Player 2 Wins War");
+                size = CardsForGrab.getDeckSize();
+                for(int i = 0; i<size; i++) {
+                    d2.addCardToDeck(CardsForGrab.dealCardFromDeck());
+                }
+                System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
+                System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
+            } else if (p1t.getRank() == p2t.getRank()) {
+                war(p1t,p2t,d1,d2);
+            }
+
         } else if (d1.getDeckSize() < 4) {
-            for (int i = 0; i<d1.getDeckSize(); i++) {
+            //System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
+            //System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
+            //System.out.println("Not enough cards for War, Player 2 Wins");
+            int test = d1.getDeckSize();
+            for (int i =0; i<test; i++) {
                 d2.addCardToDeck(d1.dealCardFromDeck());
             }
+            
         } else if (d2.getDeckSize() < 4) {
-            for (int i = 0; i<d1.getDeckSize(); i++) {
-                d1.addCardToDeck(d2.dealCardFromDeck());
+            //System.out.println("Player 1's Deck Size = " + d1.getDeckSize());
+            //System.out.println("Player 2's Deck Size = " + d2.getDeckSize());
+            //System.out.println("Not enough cards for War, Player 1 Wins");
+            int test = d1.getDeckSize();
+            for (int i =0; i<test; i++) {
+                d2.addCardToDeck(d1.dealCardFromDeck());
             }
         }
     }
