@@ -6,7 +6,6 @@
  */
 public class War
 {
-    private Deck[] ds;
     Deck CardsForGrab = new Deck();
     /**
      * Constructor for the game
@@ -16,6 +15,7 @@ public class War
     public War()
     {
         // Initializations here...
+        Deck[] ds;
         Deck deck = new Deck();
         deck.initializeNewDeck();
         deck.shuffle();
@@ -33,9 +33,11 @@ public class War
      */
     public void runEventLoop(Deck d1, Deck d2) {
         int round = 1;
+        Card p1;
+        Card p2;
         while (d1.getDeckSize() > 0 && d2.getDeckSize() > 0 && round < 300) {
-            Card p1 = d1.dealCardFromDeck();
-            Card p2 = d2.dealCardFromDeck();
+            p1 = d1.dealCardFromDeck();
+            p2 = d2.dealCardFromDeck();
             System.out.println("Round: " + round);
             System.out.println("Player 1's Top Card = " + p1.getFace() + " of " + p1.getSuit());
             System.out.println("Player 2's Top Card = " + p2.getFace() + " of " + p2.getSuit());
@@ -61,6 +63,7 @@ public class War
 
     public void war(Deck d1, Deck d2, Card p1, Card p2) {
         System.out.println("War");
+        
         if (d1.getDeckSize() >= 4 && d2.getDeckSize() >= 4) {
             CardsForGrab.addCardToDeck(p1);
             CardsForGrab.addCardToDeck(p2);
@@ -78,7 +81,7 @@ public class War
             System.out.println("Player 2 top card = " + p2t.getFace() + " of " + p2t.getSuit());
             int size;
             if (p1t.getRank() == p2t.getRank()) {
-                war(d1,d2,p1,p2);
+                war(d1,d2,p1t,p2t);
             }else if (p1t.getRank() > p2t.getRank()) {
                 System.out.println("Player 1 Wins War");
                 size = CardsForGrab.getDeckSize();
